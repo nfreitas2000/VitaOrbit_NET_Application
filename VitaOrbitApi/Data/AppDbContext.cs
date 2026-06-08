@@ -21,7 +21,7 @@ namespace VitaOrbitApi.Data
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.ToTable("USERS");
+                entity.ToTable("VITA_USERS");
 
                 entity.HasKey(e => e.UserId);
 
@@ -58,7 +58,7 @@ namespace VitaOrbitApi.Data
 
             modelBuilder.Entity<HealthRecord>(entity =>
             {
-                entity.ToTable("HEALTH_RECORDS");
+                entity.ToTable("VITA_HEALTH_RECORDS");
 
                 entity.HasKey(e => e.HealthRecordId);
 
@@ -82,7 +82,7 @@ namespace VitaOrbitApi.Data
 
             modelBuilder.Entity<SymptomRecord>(entity =>
             {
-                entity.ToTable("SYMPTOM_RECORDS");
+                entity.ToTable("VITA_SYMPTOM_RECORDS");
 
                 entity.HasKey(e => e.SymptomRecordId);
 
@@ -103,7 +103,7 @@ namespace VitaOrbitApi.Data
 
             modelBuilder.Entity<EnvironmentalCondition>(entity =>
             {
-                entity.ToTable("ENVIRONMENTAL_CONDITIONS");
+                entity.ToTable("VITA_ENVIRONMENTAL_CONDITIONS");
 
                 entity.HasKey(e => e.EnvironmentalConditionId);
 
@@ -125,7 +125,7 @@ namespace VitaOrbitApi.Data
 
             modelBuilder.Entity<Emergency>(entity =>
             {
-                entity.ToTable("EMERGENCIES");
+                entity.ToTable("VITA_EMERGENCIES");
 
                 entity.HasKey(e => e.EmergencyId);
 
@@ -143,7 +143,7 @@ namespace VitaOrbitApi.Data
 
             modelBuilder.Entity<Alert>(entity =>
             {
-                entity.ToTable("ALERTS");
+                entity.ToTable("VITA_ALERTS");
 
                 entity.HasKey(e => e.AlertId);
 
