@@ -1,48 +1,48 @@
-# ==========================
-# STAGE 1 - BUILD
-# ==========================
+# =========================
+# Etapa 1 - Build
+# =========================
+
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 WORKDIR /src
 
 # Copia solução e projeto
-COPY VitaOrbit.slnx .
+COPY VitaOrbitApi.slnx .
 COPY VitaOrbitApi/VitaOrbitApi.csproj VitaOrbitApi/
 
 # Restaura dependências
 RUN dotnet restore VitaOrbitApi/VitaOrbitApi.csproj
 
-# Copia todo o restante
+# Copia todo o restante do código
 COPY . .
 
-# Publica aplicação
-RUN dotnet publish VitaOrbitApi/VitaOrbitApi.csproj \
+# Publica a aplicação
+WORKDIR /src/VitaOrbitApi
+
+RUN dotnet publish \
     -c Release \
     -o /app/publish \
     --no-restore
 
-# ==========================
-# STAGE 2 - RUNTIME
-# ==========================
+# =========================
+# Etapa 2 - Runtime
+# =========================
+
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 
-# Diretório de trabalho (requisito)
 WORKDIR /app
-
-# Variável de ambiente (requisito)
-ENV ASPNETCORE_URLS=http://+:8080
 
 # Copia arquivos publicados
 COPY --from=build /app/publish .
 
-# Porta da aplicação (requisito)
+# Variável de ambiente obrigatória
+ENV ASPNETCORE_URLS=http://+:8080
+
+# Porta da API
 EXPOSE 8080
 
-# Usuário não privilegiado (requisito)
-RUN addgroup --system vitaorbit && \
-    adduser --system --ingroup vitaorbit appuser
-
-RUN chown -R appuser:vitaorbit /app
+# Usuário não privilegiado
+RUN useradd -m appuser
 
 USER appuser
 
